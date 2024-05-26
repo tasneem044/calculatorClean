@@ -11,7 +11,7 @@ class MainText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       numText.toString(),
-      style: TextStyle(fontSize: 90),
+      style: TextStyle(fontSize: 90, color: Colors.white),
     );
   }
 }
