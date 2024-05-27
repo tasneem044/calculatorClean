@@ -1,4 +1,4 @@
-import 'package:calculatorclean/domain/entites.dart';
+import 'package:calculatorclean/domain/entites/cal_button_info.dart';
 import 'package:calculatorclean/presentaion/widgets/main_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
