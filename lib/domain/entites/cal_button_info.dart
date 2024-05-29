@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 
 class CalButton {
   String number;
-  late Function onTab;
   Color btnColor;
+  int intNumb ;
   Color textColor;
 
   CalButton(
-      {this.textColor =Colors.white,this.btnColor = Colors.orange, this.number = "0", required this.onTab});
+      {this.textColor =Colors.white,this.btnColor = Colors.orange, this.number = "0", this.intNumb=0});
 }
