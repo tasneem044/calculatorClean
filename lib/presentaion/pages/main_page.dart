@@ -99,6 +99,7 @@ class _MainPageState extends State<MainPage> {
   int numbResult = 0;
   List<String> mainNumberList = [];
   int i = 0;
+  String fullString = " ";
 
   @override
   Widget build(BuildContext context) {
@@ -107,65 +108,88 @@ class _MainPageState extends State<MainPage> {
       extendBodyBehindAppBar: true,
       body: Container(
         padding: EdgeInsets.all(16),
-        child:
-            Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-          SizedBox(
-            height: 100,
-          ),
-          Align(
-              alignment: Alignment.topRight,
-              child: MainText(
-                numText: stringResultNum,
-              )),
-          Expanded(
-            child: Container(
-              child: GridView.builder(
-                  itemCount: calNumbers.length,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 4),
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        int numberInt = calNumbers[index].intNumb;
-                        onTabFun(numberInt);
-                      },
-                      child: Container(
-                        height: 25,
-                        decoration: BoxDecoration(
-                            color: calNumbers[index].btnColor,
-                            shape: BoxShape.circle),
-                        margin: EdgeInsets.all(5),
-                        child: Center(
-                          child: Text(
-                            calNumbers[index].number,
-                            style: TextStyle(
-                                fontSize: 30,
-                                color: calNumbers[index].textColor),
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              SizedBox(
+                height: 100,
+              ),
+              Text(
+                fullString,
+                style: TextStyle(fontSize: 30),
+              ),
+              Align(
+                  alignment: Alignment.topRight,
+                  child: MainText(
+                    numText: stringResultNum,
+                  )),
+              Expanded(
+                child: Container(
+                  child: GridView.builder(
+                      itemCount: calNumbers.length,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 4),
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: () {
+                            int numberInt = calNumbers[index].intNumb;
+                            onTabFun(numberInt);
+                          },
+                          child: Container(
+                            height: 25,
+                            decoration: BoxDecoration(
+                                color: calNumbers[index].btnColor,
+                                shape: BoxShape.circle),
+                            margin: EdgeInsets.all(5),
+                            child: Center(
+                              child: Text(
+                                calNumbers[index].number,
+                                style: TextStyle(
+                                    fontSize: 30,
+                                    color: calNumbers[index].textColor),
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    );
-                  }),
-            ),
-          ),
-        ]),
+                        );
+                      }),
+                ),
+              ),
+            ]),
       ),
     );
   }
 
   onTabFun(int numb) {
     if (numb != 20) {
-      if (numb >= 0 && numb <= 9) {
+
+      for(int t =0;numb>=0 && numb<=9 &&t<1;t++){
         int.parse(stringResultNum) == 0
             ? stringResultNum = numb.toString()
             : stringResultNum = stringResultNum + numb.toString();
-        mainNumberList.add(stringResultNum);
+
         setState(() {
           stringResultNum;
           print("the number is :: $numb");
-          print(mainNumberList[i]);
+          //
         });
       }
+      // if (numb >= 0 && numb <= 9) {
+      //   int.parse(stringResultNum) == 0
+      //       ? stringResultNum = numb.toString()
+      //       : stringResultNum = stringResultNum + numb.toString();
+      //
+      //   setState(() {
+      //     stringResultNum;
+      //     print("the number is :: $numb");
+      //    //
+      //   });
+      // }
+
+      mainNumberList.add(stringResultNum);
+      print(mainNumberList[i]);
+      print("string = $stringResultNum");
+
       switch (numb) {
         case 30: //AC
           {
@@ -173,27 +197,35 @@ class _MainPageState extends State<MainPage> {
               stringResultNum = "0";
               firstNumberCal = 0;
               numbResult = 0;
-              print("i can delete");
+              fullString = " ";
+              mainNumberList=[];
             });
           }
           break;
         case 90: //summation
           {
+
             mainNumberList.add("+");
 
             setState(() {
               stringResultNum = "0"; //must be review again
               firstNumberCal = 0;
+              fullString= stringResultNum;
+              fullString = fullString + " + ";
               numbResult = 0;
             });
           }
           break;
+        default:
+          {
+
+          }
       }
     } else //if it equal entered
     {
-      for (int x = 0; x < (mainNumberList.length - 1); x++) {
-        print("x :: $x , ${mainNumberList[x]}");
-      }
+      // for (int x = 0; x < (mainNumberList.length - 1); x++) {
+      //   print("x :: $x , ${mainNumberList[x]}");
+      // }
 
       for (int j = 0; j <= (mainNumberList.length - 1); j++) {
         switch (mainNumberList[j]) {
@@ -203,15 +235,18 @@ class _MainPageState extends State<MainPage> {
                   int.parse(mainNumberList[j + 1]);
               mainNumberList[j + 1] = z.toString();
               print("+");
-              print(" ${mainNumberList[j - 1]},  z = ");
+              print(" z = $z");
             }
             break;
-
           default:
             {
-              print("i dont have value , j = $j :: ${mainNumberList[j]}");
+              // print("i dont have value");
             }
         }
+
+        setState(() {
+          stringResultNum = mainNumberList[j]; //must be review again
+        });
       }
     }
   }
