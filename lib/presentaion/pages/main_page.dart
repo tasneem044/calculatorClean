@@ -162,8 +162,7 @@ class _MainPageState extends State<MainPage> {
 
   onTabFun(int numb) {
     if (numb != 20) {
-
-      for(int t =0;numb>=0 && numb<=9 &&t<1;t++){
+      for (int t = 0; numb >= 0 && numb <= 9 && t < 1; t++) {
         int.parse(stringResultNum) == 0
             ? stringResultNum = numb.toString()
             : stringResultNum = stringResultNum + numb.toString();
@@ -186,9 +185,7 @@ class _MainPageState extends State<MainPage> {
       //   });
       // }
 
-      mainNumberList.add(stringResultNum);
-      print(mainNumberList[i]);
-      print("string = $stringResultNum");
+
 
       switch (numb) {
         case 30: //AC
@@ -198,28 +195,29 @@ class _MainPageState extends State<MainPage> {
               firstNumberCal = 0;
               numbResult = 0;
               fullString = " ";
-              mainNumberList=[];
+              mainNumberList = [];
             });
           }
           break;
         case 90: //summation
           {
+            mainNumberList.add(stringResultNum);
+            print(mainNumberList[i]);
+            print("string = $stringResultNum");
 
             mainNumberList.add("+");
 
             setState(() {
               stringResultNum = "0"; //must be review again
               firstNumberCal = 0;
-              fullString= stringResultNum;
+              fullString = stringResultNum;
               fullString = fullString + " + ";
               numbResult = 0;
             });
           }
           break;
         default:
-          {
-
-          }
+          {}
       }
     } else //if it equal entered
     {
@@ -231,6 +229,7 @@ class _MainPageState extends State<MainPage> {
         switch (mainNumberList[j]) {
           case "+":
             {
+
               int z = int.parse(mainNumberList[j - 1]) +
                   int.parse(mainNumberList[j + 1]);
               mainNumberList[j + 1] = z.toString();
@@ -240,7 +239,10 @@ class _MainPageState extends State<MainPage> {
             break;
           default:
             {
-              // print("i dont have value");
+              mainNumberList.add(stringResultNum);
+              print(mainNumberList[i]);
+              print("string = $stringResultNum");
+
             }
         }
 
