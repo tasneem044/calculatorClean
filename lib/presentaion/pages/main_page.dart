@@ -185,8 +185,6 @@ class _MainPageState extends State<MainPage> {
       //   });
       // }
 
-
-
       switch (numb) {
         case 30: //AC
           {
@@ -201,21 +199,19 @@ class _MainPageState extends State<MainPage> {
           break;
         case 90: //summation
           {
-            mainNumberList.add(stringResultNum);
-            print(mainNumberList[i]);
-            print("string = $stringResultNum");
-
+            printList();
             mainNumberList.add("+");
-
-            setState(() {
-              stringResultNum = "0"; //must be review again
-              firstNumberCal = 0;
-              fullString = stringResultNum;
-              fullString = fullString + " + ";
-              numbResult = 0;
-            });
+            screenPar();
           }
           break;
+        case 80:
+          {
+            printList();
+            mainNumberList.add("-");
+            screenPar();
+          }
+          break;
+
         default:
           {}
       }
@@ -225,11 +221,10 @@ class _MainPageState extends State<MainPage> {
       //   print("x :: $x , ${mainNumberList[x]}");
       // }
 
-      for (int j = 0; j <= (mainNumberList.length - 1); j++) {
+      for (int j = 0; j <= (mainNumberList.length); j++) {
         switch (mainNumberList[j]) {
           case "+":
             {
-
               int z = int.parse(mainNumberList[j - 1]) +
                   int.parse(mainNumberList[j + 1]);
               mainNumberList[j + 1] = z.toString();
@@ -237,12 +232,18 @@ class _MainPageState extends State<MainPage> {
               print(" z = $z");
             }
             break;
+          case "-":
+            {
+              int y = int.parse(mainNumberList[j - 1]) -
+                  int.parse(mainNumberList[j + 1]);
+              mainNumberList[j + 1] = y.toString();
+              print("-");
+              print(" y = $y");
+            }
+            break;
           default:
             {
-              mainNumberList.add(stringResultNum);
-              print(mainNumberList[i]);
-              print("string = $stringResultNum");
-
+              printList();
             }
         }
 
@@ -251,5 +252,21 @@ class _MainPageState extends State<MainPage> {
         });
       }
     }
+  }
+
+  screenPar() {
+    setState(() {
+      stringResultNum = "0"; //must be review again
+      firstNumberCal = 0;
+      fullString = stringResultNum;
+      fullString = fullString + " + ";
+      numbResult = 0;
+    });
+  }
+
+  printList() {
+    mainNumberList.add(stringResultNum);
+    print(mainNumberList[i]);
+    print("string = $stringResultNum");
   }
 }
