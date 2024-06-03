@@ -161,8 +161,8 @@ class _MainPageState extends State<MainPage> {
   }
 
   onTabFun(int numb) {
-    if (numb != 20) {
-      for (int t = 0; numb >= 0 && numb <= 9 && t < 1; t++) {
+   //if intialy here
+      if (numb >= 0 && numb <= 9) {
         int.parse(stringResultNum) == 0
             ? stringResultNum = numb.toString()
             : stringResultNum = stringResultNum + numb.toString();
@@ -172,19 +172,12 @@ class _MainPageState extends State<MainPage> {
           print("the number is :: $numb");
           //
         });
-      }
-      // if (numb >= 0 && numb <= 9) {
-      //   int.parse(stringResultNum) == 0
-      //       ? stringResultNum = numb.toString()
-      //       : stringResultNum = stringResultNum + numb.toString();
-      //
-      //   setState(() {
-      //     stringResultNum;
-      //     print("the number is :: $numb");
-      //    //
-      //   });
-      // }
+      }else{ mainNumberList.add(stringResultNum);
+     }
 
+      //for (int f = 0; numb >= 0 && numb <= 9; f++) {}
+
+      if (numb != 20) {
       switch (numb) {
         case 30: //AC
           {
@@ -199,37 +192,59 @@ class _MainPageState extends State<MainPage> {
           break;
         case 90: //summation
           {
-            printList();
+
             mainNumberList.add("+");
-            screenPar();
+            screenPar("+");
+            // print("length : ${mainNumberList.length}");
           }
           break;
         case 80:
           {
-            printList();
+
             mainNumberList.add("-");
-            screenPar();
+            screenPar("-");
           }
           break;
+        case 70:
+          {
 
+            mainNumberList.add("X");
+            screenPar("X");
+          }
+          break;
+        case 60:
+          {
+
+            mainNumberList.add("/");
+            screenPar("/");
+          }
+          break;
+        case 50:
+          {
+
+            mainNumberList.add("%");
+            screenPar("%");
+          }
+          break;
         default:
           {}
+          break;
       }
     } else //if it equal entered
     {
-      // for (int x = 0; x < (mainNumberList.length - 1); x++) {
-      //   print("x :: $x , ${mainNumberList[x]}");
-      // }
+       mainNumberList.add("=");
+      screenPar("=");
 
-      for (int j = 0; j <= (mainNumberList.length); j++) {
+      print(mainNumberList);
+      for (int j = 0; j < (mainNumberList.length - 1); j++) {
         switch (mainNumberList[j]) {
           case "+":
             {
               int z = int.parse(mainNumberList[j - 1]) +
                   int.parse(mainNumberList[j + 1]);
               mainNumberList[j + 1] = z.toString();
-              print("+");
               print(" z = $z");
+              stringResultNum = z.toString();
             }
             break;
           case "-":
@@ -237,35 +252,91 @@ class _MainPageState extends State<MainPage> {
               int y = int.parse(mainNumberList[j - 1]) -
                   int.parse(mainNumberList[j + 1]);
               mainNumberList[j + 1] = y.toString();
+
               print("-");
               print(" y = $y");
+              stringResultNum = y.toString();
+
+            }
+            break;
+          case "X":
+            {
+              int t = int.parse(mainNumberList[j - 1]) *
+                  int.parse(mainNumberList[j + 1]);
+              mainNumberList[j + 1] = t.toString();
+              // firstNumberCal = t;
+              print("*");
+              print("t = $t");
+              stringResultNum=t.toString();
+              setState(() {
+
+               // fullString = mainNumberList[j - 1] + mainNumberList[j];
+                // firstNumberCal = y;
+              });
+            }
+            break;
+          case "/":
+            {
+              double s = (int.parse(mainNumberList[j - 1]) /
+                  int.parse(mainNumberList[j + 1]));
+              int v = s.toInt();
+              mainNumberList[j + 1] = v.toString();
+              print("/");
+              print("s = $s");
+stringResultNum=v.toString();
+              setState(() {
+               // stringResultNum = mainNumberList[j+1];
+                // fullString = mainNumberList[j - 1] + mainNumberList[j];
+                // firstNumberCal = y;
+              });
+              //  firstNumberCal = v;
+            }
+            break;
+          case "%":
+            {
+              int u = int.parse(mainNumberList[j - 1]) %
+                  int.parse(mainNumberList[j + 1]);
+              mainNumberList[j + 1] = u.toString();
+              print("%");
+              print("u = $u");
+             stringResultNum= u.toString();
+              //firstNumberCal = u;
+            }
+            break;
+          case "=":
+            {
+              setState(() {
+                stringResultNum;
+              });
+              print("equaaaaaaaaaaaaaal");
             }
             break;
           default:
             {
-              printList();
+              print(" equal / length : ${mainNumberList.length}");
+              // firstNumberCal = y;
+              //fullString = fullString + stringResultNum;
             }
         }
-
-        setState(() {
-          stringResultNum = mainNumberList[j]; //must be review again
-        });
       }
     }
   }
 
-  screenPar() {
+  screenPar(String sym) {
     setState(() {
-      stringResultNum = "0"; //must be review again
-      firstNumberCal = 0;
+      stringResultNum = "0";
       fullString = stringResultNum;
-      fullString = fullString + " + ";
-      numbResult = 0;
+//      stringResultNum = firstNumberCal.toString();
+      fullString = fullString + sym;
+      // numbResult = 0;
     });
   }
 
   printList() {
-    mainNumberList.add(stringResultNum);
+    setState(() {
+      mainNumberList.add(stringResultNum);
+    });
+
     print(mainNumberList[i]);
     print("string = $stringResultNum");
   }
