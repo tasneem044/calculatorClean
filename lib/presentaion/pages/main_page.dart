@@ -1,6 +1,7 @@
 import 'package:calculatorclean/domain/entites/cal_button_info.dart';
 import 'package:calculatorclean/presentaion/widgets/main_text.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -161,28 +162,29 @@ class _MainPageState extends State<MainPage> {
   }
 
   onTabFun(int numb) {
-   //if intialy here
-      if (numb >= 0 && numb <= 9) {
-        int.parse(stringResultNum) == 0
-            ? stringResultNum = numb.toString()
-            : stringResultNum = stringResultNum + numb.toString();
+    //if intialy here
+    if (numb >= 0 && numb <= 9 ) {
+      // stringStaus(numb);
+      int.parse(stringResultNum) == 0
+          ? stringResultNum = numb.toString()
+          : stringResultNum = stringResultNum + numb.toString();
+      setState(() {
+        stringResultNum;
+        print("the number is :: $numb");
+        //
+      });
+    } else {
+      mainNumberList.add(stringResultNum);
+    }
 
-        setState(() {
-          stringResultNum;
-          print("the number is :: $numb");
-          //
-        });
-      }else{ mainNumberList.add(stringResultNum);
-     }
+    //for (int f = 0; numb >= 0 && numb <= 9; f++) {}
 
-      //for (int f = 0; numb >= 0 && numb <= 9; f++) {}
-
-      if (numb != 20) {
+    if (numb != 20) {
       switch (numb) {
         case 30: //AC
           {
+            stringResultNum = "0";
             setState(() {
-              stringResultNum = "0";
               firstNumberCal = 0;
               numbResult = 0;
               fullString = " ";
@@ -192,38 +194,46 @@ class _MainPageState extends State<MainPage> {
           break;
         case 90: //summation
           {
-
             mainNumberList.add("+");
             screenPar("+");
+            stringResultNum = "0";
+            // stringStaus(numb);
             // print("length : ${mainNumberList.length}");
           }
           break;
         case 80:
           {
-
             mainNumberList.add("-");
             screenPar("-");
+            stringResultNum = "0";
           }
           break;
         case 70:
           {
-
             mainNumberList.add("X");
             screenPar("X");
+            stringResultNum = "0";
           }
           break;
         case 60:
           {
-
             mainNumberList.add("/");
             screenPar("/");
+            stringResultNum = "0";
           }
           break;
         case 50:
           {
-
             mainNumberList.add("%");
             screenPar("%");
+            stringResultNum = "0";
+          }
+          break;
+        case 40:
+          {
+            setState(() {
+              stringResultNum = (int.parse(stringResultNum) * -1).toString();
+            });
           }
           break;
         default:
@@ -232,9 +242,8 @@ class _MainPageState extends State<MainPage> {
       }
     } else //if it equal entered
     {
-       mainNumberList.add("=");
+      mainNumberList.add("=");
       screenPar("=");
-
       print(mainNumberList);
       for (int j = 0; j < (mainNumberList.length - 1); j++) {
         switch (mainNumberList[j]) {
@@ -243,7 +252,9 @@ class _MainPageState extends State<MainPage> {
               int z = int.parse(mainNumberList[j - 1]) +
                   int.parse(mainNumberList[j + 1]);
               mainNumberList[j + 1] = z.toString();
-              print(" z = $z");
+              if (kDebugMode) {
+                print(" z = $z");
+              }
               stringResultNum = z.toString();
             }
             break;
@@ -256,7 +267,6 @@ class _MainPageState extends State<MainPage> {
               print("-");
               print(" y = $y");
               stringResultNum = y.toString();
-
             }
             break;
           case "X":
@@ -264,15 +274,9 @@ class _MainPageState extends State<MainPage> {
               int t = int.parse(mainNumberList[j - 1]) *
                   int.parse(mainNumberList[j + 1]);
               mainNumberList[j + 1] = t.toString();
-              // firstNumberCal = t;
               print("*");
               print("t = $t");
-              stringResultNum=t.toString();
-              setState(() {
-
-               // fullString = mainNumberList[j - 1] + mainNumberList[j];
-                // firstNumberCal = y;
-              });
+              stringResultNum = t.toString();
             }
             break;
           case "/":
@@ -283,13 +287,7 @@ class _MainPageState extends State<MainPage> {
               mainNumberList[j + 1] = v.toString();
               print("/");
               print("s = $s");
-stringResultNum=v.toString();
-              setState(() {
-               // stringResultNum = mainNumberList[j+1];
-                // fullString = mainNumberList[j - 1] + mainNumberList[j];
-                // firstNumberCal = y;
-              });
-              //  firstNumberCal = v;
+              stringResultNum = v.toString();
             }
             break;
           case "%":
@@ -299,17 +297,16 @@ stringResultNum=v.toString();
               mainNumberList[j + 1] = u.toString();
               print("%");
               print("u = $u");
-             stringResultNum= u.toString();
+              stringResultNum = u.toString();
               //firstNumberCal = u;
             }
             break;
-          case "=":
-            {
-              setState(() {
-                stringResultNum;
-              });
-              print("equaaaaaaaaaaaaaal");
-            }
+            // case "=":
+            //   {
+            //     stringResultNum;
+            //
+            //     print("equaaaaaaaaaaaaaal");
+            //   }
             break;
           default:
             {
@@ -323,21 +320,21 @@ stringResultNum=v.toString();
   }
 
   screenPar(String sym) {
+    // stringResultNum="0";
+    //fullString = stringResultNum;
     setState(() {
-      stringResultNum = "0";
-      fullString = stringResultNum;
 //      stringResultNum = firstNumberCal.toString();
-      fullString = fullString + sym;
+      fullString = fullString + stringResultNum + sym;
       // numbResult = 0;
     });
   }
 
-  printList() {
-    setState(() {
-      mainNumberList.add(stringResultNum);
-    });
-
-    print(mainNumberList[i]);
-    print("string = $stringResultNum");
-  }
+// printList() {
+//   setState(() {
+//     mainNumberList.add(stringResultNum);
+//   });
+//
+//   print(mainNumberList[i]);
+//   print("string = $stringResultNum");
+// }
 }
